@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Settings')}"></head>
+<body>
+<div class="dashboard-shell">
+    <div class="mobile-overlay" data-menu-overlay></div>
+    <aside th:replace="~{fragments/sidebar :: sidebar('settings')}"></aside>
+
+    <div class="app-frame">
+        <main class="dashboard-main">
+            <header th:replace="~{fragments/navbar :: navbar('Settings', 'Workspace preferences')}"></header>
+
+            <section class="page-hero">
+                <div>
+                    <p class="eyebrow">Settings</p>
+                    <h2>Control account, gateway, and notification preferences.</h2>
+                    <p>These controls are prepared as frontend UI and can be connected to backend persistence later.</p>
+                </div>
+                <button class="primary-action" type="button">Save changes</button>
+            </section>
+
+            <section class="settings-grid">
+                <article class="panel">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">Profile</p>
+                            <h2>Account details</h2>
+                        </div>
+                    </div>
+                    <form class="settings-form">
+                        <label>
+                            Email
+                            <input type="email" th:value="${email}" readonly>
+                        </label>
+                        <label>
+                            Merchant name
+                            <input type="text" value="Payment Gateway System">
+                        </label>
+                        <label>
+                            Support phone
+                            <input type="tel" placeholder="Add phone number">
+                        </label>
+                    </form>
+                </article>
+
+                <article class="panel">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">Gateway</p>
+                            <h2>Payment behavior</h2>
+                        </div>
+                    </div>
+                    <div class="toggle-list">
+                        <label><input type="checkbox" checked> Accept online payments</label>
+                        <label><input type="checkbox" checked> Send invoice after payment</label>
+                        <label><input type="checkbox"> Require manual review for failed payments</label>
+                    </div>
+                </article>
+            </section>
+        </main>
+
+        <footer th:replace="~{fragments/footer :: footer}"></footer>
+    </div>
+</div>
+<script th:src="@{/js/dashboard.js}"></script>
+</body>
+</html>

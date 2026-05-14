@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Cart')}"></head>
+<body>
+<div class="dashboard-shell">
+    <div class="mobile-overlay" data-menu-overlay></div>
+    <aside th:replace="~{fragments/sidebar :: sidebar('cart')}"></aside>
+
+    <div class="app-frame">
+        <main class="dashboard-main">
+            <header th:replace="~{fragments/navbar :: navbar('Cart', 'Checkout basket')}"></header>
+
+            <section class="page-hero">
+                <div>
+                    <p class="eyebrow">Cart module</p>
+                    <h2>Review selected products before order creation.</h2>
+                    <p>Quantities and totals are recalculated by the backend before checkout.</p>
+                </div>
+                <a class="primary-action" th:href="@{/dashboard/checkout}" th:classappend="${cartItems.isEmpty()} ? ' disabled-link' : ''">
+                    Continue to checkout
+                </a>
+            </section>
+
+            <section class="content-grid">
+                <article class="panel">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">Items</p>
+                            <h2>Cart details</h2>
+                        </div>
+                    </div>
+
+                    <div class="empty-state" th:if="${cartItems.isEmpty()}">
+                        <strong>Your cart is empty</strong>
+                        <p>Add catalog products to show line items, quantity, and item totals.</p>
+                    </div>
+
+                    <div class="table-wrap" th:if="${!cartItems.isEmpty()}">
+                        <table class="data-table">
+                            <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="item : ${cartItems}">
+                                <td th:text="${item.product.productName}">Product</td>
+                                <td th:text="${'INR ' + #numbers.formatDecimal(item.product.price, 1, 2)}">INR 0.00</td>
+                                <td>
+                                    <form class="table-form" th:action="@{/cart/update}" method="post">
+                                        <input type="hidden" name="cartId" th:value="${item.id}">
+                                        <input class="quantity-input" type="number" name="quantity" min="1" max="99" th:value="${item.quantity}">
+                                        <button class="secondary-action" type="submit">Update</button>
+                                    </form>
+                                </td>
+                                <td th:text="${'INR ' + #numbers.formatDecimal(item.totalPrice, 1, 2)}">INR 0.00</td>
+                                <td>
+                                    <form th:action="@{/cart/remove}" method="post">
+                                        <input type="hidden" name="cartId" th:value="${item.id}">
+                                        <button class="danger-action" type="submit">Remove</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </article>
+
+                <article class="panel">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">Totals</p>
+                            <h2>Checkout summary</h2>
+                        </div>
+                    </div>
+                    <div class="summary-list">
+                        <div><span>Items</span><strong th:text="${cartItemCount}">0</strong></div>
+                        <div><span>Subtotal</span><strong th:text="${'INR ' + #numbers.formatDecimal(cartTotal, 1, 2)}">INR 0.00</strong></div>
+                        <div><span>Tax</span><strong>Included</strong></div>
+                        <div><span>Total</span><strong th:text="${'INR ' + #numbers.formatDecimal(cartTotal, 1, 2)}">INR 0.00</strong></div>
+                    </div>
+                    <a class="primary-action full-action" th:href="@{/dashboard/checkout}" th:if="${!cartItems.isEmpty()}">Pay now</a>
+                    <a class="secondary-link" th:href="@{/dashboard/products}">Browse products</a>
+                </article>
+            </section>
+        </main>
+
+        <footer th:replace="~{fragments/footer :: footer}"></footer>
+    </div>
+</div>
+<script th:src="@{/js/dashboard.js}"></script>
+</body>
+</html>

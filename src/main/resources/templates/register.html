@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | Payment Gateway</title>
+    <link rel="stylesheet" th:href="@{/css/auth.css}">
+</head>
+<body class="auth-page">
+<main class="auth-shell">
+    <section class="auth-brand register-brand" aria-label="Payment gateway account setup">
+        <nav class="brand-top">
+            <img class="brand-logo" th:src="@{/images/logo.png}" alt="PayFlow logo">
+            <span>PayFlow Gateway</span>
+        </nav>
+
+        <div class="brand-copy">
+            <p class="eyebrow">Customer onboarding</p>
+            <h1>Create your gateway account and start securely.</h1>
+            <p>
+                Your account will be prepared with customer access so you can continue into the payment dashboard.
+            </p>
+        </div>
+
+        <div class="trust-grid" aria-label="Account benefits">
+            <div>
+                <strong>Active</strong>
+                <span>Account status</span>
+            </div>
+            <div>
+                <strong>Secure</strong>
+                <span>Password storage</span>
+            </div>
+            <div>
+                <strong>Ready</strong>
+                <span>Dashboard access</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="auth-panel" aria-label="Registration form">
+        <div class="auth-card">
+            <div class="form-heading">
+                <p class="eyebrow">Get started</p>
+                <h2>Create account</h2>
+                <p>Enter your details exactly as you want them linked to the account.</p>
+            </div>
+
+            <div class="alert danger" th:if="${error}" th:text="${error}">
+                Registration failed.
+            </div>
+
+            <form class="auth-form" th:action="@{/auth/register}" th:object="${user}" method="post" novalidate>
+                <label class="field">
+                    <span>Full name</span>
+                    <input type="text" th:field="*{fullName}" placeholder="Aarav Sharma" autocomplete="name" minlength="2" required>
+                    <small class="field-error">Enter your full name.</small>
+                </label>
+
+                <label class="field">
+                    <span>Email address</span>
+                    <input type="email" th:field="*{email}" placeholder="you@company.com" autocomplete="email" required>
+                    <small class="field-error">Enter a valid email address.</small>
+                </label>
+
+                <label class="field">
+                    <span>Phone number</span>
+                    <input type="tel" th:field="*{phone}" placeholder="9876543210" autocomplete="tel" pattern="[0-9+\-\s]{8,15}" required>
+                    <small class="field-error">Enter a valid phone number.</small>
+                </label>
+
+                <label class="field password-field">
+                    <span>Password</span>
+                    <input type="password" th:field="*{password}" placeholder="Create a strong password" autocomplete="new-password" minlength="6" required>
+                    <button class="password-toggle" type="button" aria-label="Show password" data-toggle-password>Show</button>
+                    <small class="field-error">Use at least 6 characters.</small>
+                </label>
+
+                <button class="primary-button" type="submit">Register account</button>
+            </form>
+
+            <p class="switch-auth">
+                Already registered?
+                <a th:href="@{/auth/login}">Login instead</a>
+            </p>
+        </div>
+    </section>
+</main>
+
+<script th:src="@{/js/auth.js}"></script>
+</body>
+</html>

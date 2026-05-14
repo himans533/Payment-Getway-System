@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Payments')}"></head>
+<body>
+<div class="dashboard-shell">
+    <div class="mobile-overlay" data-menu-overlay></div>
+    <aside th:replace="~{fragments/sidebar :: sidebar('payments')}"></aside>
+
+    <div class="app-frame">
+        <main class="dashboard-main">
+            <header th:replace="~{fragments/navbar :: navbar('Payments', 'Gateway transactions')}"></header>
+
+            <section class="page-hero">
+                <div>
+                    <p class="eyebrow">Payment module</p>
+                    <h2>Track every transaction from creation to verification.</h2>
+                    <p>Successful payments are signature-verified before orders and invoices are updated.</p>
+                </div>
+                <a class="primary-action" th:href="@{/dashboard/checkout}">Open checkout</a>
+            </section>
+
+            <section class="metric-grid">
+                <article class="metric-card">
+                    <span>Captured</span>
+                    <strong th:text="${capturedCount}">0</strong>
+                    <p>Successful payments</p>
+                </article>
+                <article class="metric-card">
+                    <span>Pending</span>
+                    <strong th:text="${pendingCount}">0</strong>
+                    <p>Awaiting confirmation</p>
+                </article>
+                <article class="metric-card">
+                    <span>Failed</span>
+                    <strong th:text="${failedCount}">0</strong>
+                    <p>Needs review</p>
+                </article>
+            </section>
+
+            <section class="panel">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow">Recent payments</p>
+                        <h2>Transactions</h2>
+                    </div>
+                </div>
+
+                <div class="empty-state" th:if="${payments.isEmpty()}">
+                    <strong>No payments yet</strong>
+                    <p>Payments will appear after checkout creates a Razorpay order.</p>
+                </div>
+
+                <div class="table-wrap" th:if="${!payments.isEmpty()}">
+                    <table class="data-table">
+                        <thead>
+                        <tr>
+                            <th>Payment ID</th>
+                            <th>Razorpay Order</th>
+                            <th>Method</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Webhook</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="payment : ${payments}">
+                            <td th:text="${payment.razorpayPaymentId ?: 'Pending'}">Pending</td>
+                            <td th:text="${payment.razorpayOrderId}">order</td>
+                            <td th:text="${payment.paymentMethod}">Razorpay</td>
+                            <td th:text="${'INR ' + #numbers.formatDecimal(payment.amount, 1, 2)}">INR 0.00</td>
+                            <td><span class="table-status" th:classappend="${#strings.toLowerCase(payment.paymentStatus)}" th:text="${payment.paymentStatus}">PENDING</span></td>
+                            <td th:text="${payment.webhookReceived ? 'Received' : 'Waiting'}">Waiting</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <footer th:replace="~{fragments/footer :: footer}"></footer>
+    </div>
+</div>
+<script th:src="@{/js/dashboard.js}"></script>
+</body>
+</html>

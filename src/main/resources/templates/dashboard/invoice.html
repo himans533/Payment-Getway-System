@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Invoice')}"></head>
+<body>
+<div class="dashboard-shell">
+    <div class="mobile-overlay" data-menu-overlay></div>
+    <aside th:replace="~{fragments/sidebar :: sidebar('invoice')}"></aside>
+
+    <div class="app-frame">
+        <main class="dashboard-main">
+            <header th:replace="~{fragments/navbar :: navbar('Invoice', 'Billing records')}"></header>
+
+            <section class="page-hero">
+                <div>
+                    <p class="eyebrow">Invoice module</p>
+                    <h2>Billing records are created after successful payments.</h2>
+                    <p>This first version stores invoice records in the database and defers PDF/email delivery.</p>
+                </div>
+                <a class="primary-action" th:href="@{/dashboard/orders}">View orders</a>
+            </section>
+
+            <section class="content-grid">
+                <article class="panel">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">Summary</p>
+                            <h2>Invoice totals</h2>
+                        </div>
+                    </div>
+                    <div class="summary-list">
+                        <div><span>Issued</span><strong th:text="${invoiceCount}">0</strong></div>
+                        <div><span>Tax recorded</span><strong th:text="${'INR ' + #numbers.formatDecimal(taxTotal, 1, 2)}">INR 0.00</strong></div>
+                        <div><span>Gross billing</span><strong th:text="${'INR ' + #numbers.formatDecimal(billingTotal, 1, 2)}">INR 0.00</strong></div>
+                    </div>
+                </article>
+
+                <article class="panel">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">Workflow</p>
+                            <h2>Invoice status</h2>
+                        </div>
+                    </div>
+                    <ul class="activity-list">
+                        <li><span class="activity-dot success"></span><div><strong>Order linked</strong><p>Each invoice is attached to a confirmed order.</p></div></li>
+                        <li><span class="activity-dot warning"></span><div><strong>PDF deferred</strong><p>PDF generation and email notifications are planned for a later pass.</p></div></li>
+                    </ul>
+                </article>
+            </section>
+
+            <section class="panel">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow">Records</p>
+                        <h2>Recent invoices</h2>
+                    </div>
+                </div>
+
+                <div class="empty-state" th:if="${invoices.isEmpty()}">
+                    <strong>No invoices yet</strong>
+                    <p>Invoices will appear after a payment is verified successfully.</p>
+                </div>
+
+                <div class="table-wrap" th:if="${!invoices.isEmpty()}">
+                    <table class="data-table">
+                        <thead>
+                        <tr>
+                            <th>Invoice</th>
+                            <th>Order</th>
+                            <th>Date</th>
+                            <th>Tax</th>
+                            <th>Total</th>
+                            <th>PDF</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="invoice : ${invoices}">
+                            <td th:text="${invoice.invoiceNumber}">INV</td>
+                            <td th:text="${invoice.order.orderId}">ORD</td>
+                            <td th:text="${#temporals.format(invoice.invoiceDate, 'dd MMM yyyy HH:mm')}">Date</td>
+                            <td th:text="${'INR ' + #numbers.formatDecimal(invoice.taxAmount, 1, 2)}">INR 0.00</td>
+                            <td th:text="${'INR ' + #numbers.formatDecimal(invoice.totalAmount, 1, 2)}">INR 0.00</td>
+                            <td>Deferred</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <footer th:replace="~{fragments/footer :: footer}"></footer>
+    </div>
+</div>
+<script th:src="@{/js/dashboard.js}"></script>
+</body>
+</html>

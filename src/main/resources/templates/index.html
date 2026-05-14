@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayFlow Gateway</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="home-page">
+<header class="site-header">
+    <a class="brand-mark" th:href="@{/}">
+        <img th:src="@{/images/logo.png}" alt="PayFlow logo">
+        <span>PayFlow Gateway</span>
+    </a>
+    <nav class="site-nav" aria-label="Primary navigation">
+        <a th:href="@{/about}">About</a>
+        <a th:href="@{/auth/login}">Login</a>
+        <a class="nav-action" th:href="@{/auth/register}">Register</a>
+    </nav>
+</header>
+
+<main>
+    <section class="hero-section">
+        <div class="hero-copy">
+            <p class="eyebrow">Secure merchant payments</p>
+            <h1>PayFlow Gateway</h1>
+            <p>
+                Accept payments, manage orders, track invoices, and review customer activity from a focused payment
+                operations workspace.
+            </p>
+            <div class="hero-actions">
+                <a class="primary-link" th:href="@{/auth/register}">Create account</a>
+                <a class="secondary-link" th:href="@{/auth/login}">Merchant login</a>
+            </div>
+        </div>
+
+        <div class="gateway-preview" aria-label="Gateway summary preview">
+            <div class="preview-header">
+                <span>Gateway status</span>
+                <strong>Online</strong>
+            </div>
+            <div class="preview-grid">
+                <div>
+                    <span>Payments</span>
+                    <strong>0</strong>
+                </div>
+                <div>
+                    <span>Orders</span>
+                    <strong>0</strong>
+                </div>
+                <div>
+                    <span>Invoices</span>
+                    <strong>0</strong>
+                </div>
+            </div>
+            <div class="checkout-strip">
+                <span>Checkout</span>
+                <strong>Ready for secure handoff</strong>
+            </div>
+        </div>
+    </section>
+
+    <section class="feature-band" aria-label="Gateway capabilities">
+        <article>
+            <span>01</span>
+            <h2>Payment Tracking</h2>
+            <p>Review payment activity and keep transaction workflows visible from the dashboard.</p>
+        </article>
+        <article>
+            <span>02</span>
+            <h2>Order Workspace</h2>
+            <p>Connect order records with payment and invoice views for cleaner operations.</p>
+        </article>
+        <article>
+            <span>03</span>
+            <h2>Customer Access</h2>
+            <p>Use registered accounts and protected dashboard routes for authenticated users.</p>
+        </article>
+    </section>
+</main>
+</body>
+</html>

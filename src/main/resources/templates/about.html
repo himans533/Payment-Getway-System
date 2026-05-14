@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | PayFlow Gateway</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="home-page">
+<header class="site-header">
+    <a class="brand-mark" th:href="@{/}">
+        <img th:src="@{/images/logo.png}" alt="PayFlow logo">
+        <span>PayFlow Gateway</span>
+    </a>
+    <nav class="site-nav" aria-label="Primary navigation">
+        <a th:href="@{/}">Home</a>
+        <a th:href="@{/auth/login}">Login</a>
+        <a class="nav-action" th:href="@{/auth/register}">Register</a>
+    </nav>
+</header>
+
+<main>
+    <section class="about-section">
+        <div>
+            <p class="eyebrow">About the platform</p>
+            <h1>Built for payment gateway operations.</h1>
+            <p>
+                PayFlow Gateway brings authentication, product browsing, cart checkout, order history, payment records,
+                and invoice pages into one Spring Boot application.
+            </p>
+        </div>
+        <div class="about-list">
+            <article>
+                <h2>Secure Access</h2>
+                <p>Public pages stay open while dashboard routes are protected behind login.</p>
+            </article>
+            <article>
+                <h2>Merchant Views</h2>
+                <p>Dashboard pages keep payments, products, carts, orders, history, and settings organized.</p>
+            </article>
+            <article>
+                <h2>Payment Ready</h2>
+                <p>The service layer is structured for gateway, webhook, invoice, and mail workflows.</p>
+            </article>
+        </div>
+    </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<aside class="sidebar" th:fragment="sidebar(activePage)" aria-label="Dashboard navigation">
+    <a class="brand" th:href="@{/dashboard}">
+        <img th:src="@{/images/logo.png}" alt="PayFlow logo">
+        <span>PayFlow</span>
+    </a>
+
+    <nav class="nav-list">
+        <a th:href="@{/dashboard}" th:classappend="${activePage == 'dashboard'} ? ' active' : ''">
+            <span class="nav-icon">D</span>
+            <span>Dashboard</span>
+        </a>
+        <a th:href="@{/dashboard/payments}" th:classappend="${activePage == 'payments'} ? ' active' : ''">
+            <span class="nav-icon">P</span>
+            <span>Payments</span>
+        </a>
+        <a th:href="@{/dashboard/orders}" th:classappend="${activePage == 'orders'} ? ' active' : ''">
+            <span class="nav-icon">O</span>
+            <span>Orders</span>
+        </a>
+        <a th:href="@{/dashboard/invoice}" th:classappend="${activePage == 'invoice'} ? ' active' : ''">
+            <span class="nav-icon">I</span>
+            <span>Invoice</span>
+        </a>
+        <a th:href="@{/dashboard/products}" th:classappend="${activePage == 'products'} ? ' active' : ''">
+            <span class="nav-icon">B</span>
+            <span>Products</span>
+        </a>
+        <a th:href="@{/dashboard/cart}" th:classappend="${activePage == 'cart'} ? ' active' : ''">
+            <span class="nav-icon">C</span>
+            <span>Cart</span>
+        </a>
+        <a th:href="@{/dashboard/checkout}" th:classappend="${activePage == 'checkout'} ? ' active' : ''">
+            <span class="nav-icon">K</span>
+            <span>Checkout</span>
+        </a>
+        <a th:href="@{/dashboard/history}" th:classappend="${activePage == 'history'} ? ' active' : ''">
+            <span class="nav-icon">H</span>
+            <span>History</span>
+        </a>
+        <a th:href="@{/dashboard/settings}" th:classappend="${activePage == 'settings'} ? ' active' : ''">
+            <span class="nav-icon">S</span>
+            <span>Settings</span>
+        </a>
+    </nav>
+</aside>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Payment Gateway</title>
+    <link rel="stylesheet" th:href="@{/css/auth.css}">
+</head>
+<body class="auth-page">
+<main class="auth-shell">
+    <section class="auth-brand" aria-label="Payment gateway overview">
+        <nav class="brand-top">
+            <img class="brand-logo" th:src="@{/images/logo.png}" alt="PayFlow logo">
+            <span>PayFlow Gateway</span>
+        </nav>
+
+        <div class="brand-copy">
+            <p class="eyebrow">Secure merchant payments</p>
+            <h1>Manage payments with a clean, reliable gateway experience.</h1>
+            <p>
+                Sign in to monitor payment activity, orders, invoices, and gateway operations from one workspace.
+            </p>
+        </div>
+
+        <div class="trust-grid" aria-label="Gateway highlights">
+            <div>
+                <strong>256-bit</strong>
+                <span>Encrypted flow</span>
+            </div>
+            <div>
+                <strong>24/7</strong>
+                <span>Gateway ready</span>
+            </div>
+            <div>
+                <strong>Fast</strong>
+                <span>Checkout handoff</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="auth-panel" aria-label="Login form">
+        <div class="auth-card">
+            <div class="form-heading">
+                <p class="eyebrow">Welcome back</p>
+                <h2>Login to your account</h2>
+                <p>Use your registered email and password to continue.</p>
+            </div>
+
+            <div class="alert success" th:if="${param.registered}">
+                Registration completed. Please login with your new account.
+            </div>
+
+            <div class="alert danger" th:if="${param.error}">
+                Invalid email or password. Please check your details.
+            </div>
+
+            <div class="alert neutral" th:if="${param.logout}">
+                You have been logged out successfully.
+            </div>
+
+            <form class="auth-form" th:action="@{/login}" method="post" novalidate>
+                <label class="field">
+                    <span>Email address</span>
+                    <input type="email" name="username" placeholder="you@company.com" autocomplete="email" required>
+                    <small class="field-error">Enter a valid email address.</small>
+                </label>
+
+                <label class="field password-field">
+                    <span>Password</span>
+                    <input type="password" name="password" placeholder="Enter your password" autocomplete="current-password" required>
+                    <button class="password-toggle" type="button" aria-label="Show password" data-toggle-password>Show</button>
+                    <small class="field-error">Password is required.</small>
+                </label>
+
+                <button class="primary-button" type="submit">Login</button>
+            </form>
+
+            <p class="switch-auth">
+                New to PayFlow?
+                <a th:href="@{/auth/register}">Create an account</a>
+            </p>
+        </div>
+    </section>
+</main>
+
+<script th:src="@{/js/auth.js}"></script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Products')}"></head>
+<body>
+<div class="dashboard-shell">
+    <div class="mobile-overlay" data-menu-overlay></div>
+    <aside th:replace="~{fragments/sidebar :: sidebar('products')}"></aside>
+
+    <div class="app-frame">
+        <main class="dashboard-main">
+            <header th:replace="~{fragments/navbar :: navbar('Products', 'Catalog')}"></header>
+
+            <section class="page-hero">
+                <div>
+                    <p class="eyebrow">Product catalog</p>
+                    <h2>Add products to your backend cart.</h2>
+                    <p>Products are loaded from the database and every cart action is tied to your signed-in account.</p>
+                </div>
+                <a class="primary-action" th:href="@{/dashboard/cart}">
+                    Cart (<span th:text="${cartItemCount}">0</span>)
+                </a>
+            </section>
+
+            <section class="panel">
+                <div class="catalog-toolbar">
+                    <input type="search" id="productSearch" placeholder="Search products">
+                    <div class="filter-row">
+                        <button class="filter-btn active" type="button" data-category="all">All</button>
+                        <button class="filter-btn" type="button" data-category="software">Software</button>
+                        <button class="filter-btn" type="button" data-category="course">Course</button>
+                        <button class="filter-btn" type="button" data-category="service">Service</button>
+                        <button class="filter-btn" type="button" data-category="subscription">Subscription</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="product-grid" th:if="${!products.isEmpty()}">
+                <article class="product-card"
+                         th:each="product : ${products}"
+                         th:attr="data-category=${product.category},data-name=${product.productName}">
+                    <div class="product-image" th:text="${product.imageUrl}">PG</div>
+                    <div>
+                        <span th:text="${#strings.capitalize(product.category)}">Software</span>
+                        <h2 th:text="${product.productName}">Payment Gateway Starter Kit</h2>
+                        <p th:text="${product.description}">Spring Boot + Thymeleaf payment integration template.</p>
+                    </div>
+                    <form class="inline-form" th:action="@{/cart/add}" method="post">
+                        <input type="hidden" name="productId" th:value="${product.id}">
+                        <label>
+                            Qty
+                            <input class="quantity-input" type="number" name="quantity" min="1" max="99" value="1">
+                        </label>
+                        <strong th:text="${'INR ' + #numbers.formatDecimal(product.price, 1, 2)}">INR 999.00</strong>
+                        <button class="primary-action compact-action" type="submit">Add</button>
+                    </form>
+                </article>
+            </section>
+
+            <section class="panel" th:if="${products.isEmpty()}">
+                <div class="empty-state">
+                    <strong>No products available</strong>
+                    <p>Products will appear here after the catalog is seeded.</p>
+                </div>
+            </section>
+        </main>
+
+        <footer th:replace="~{fragments/footer :: footer}"></footer>
+    </div>
+</div>
+<script th:src="@{/js/dashboard.js}"></script>
+<script th:src="@{/js/products.js}"></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<header class="topbar" th:fragment="navbar(title, eyebrow)">
+    <button class="menu-button" type="button" aria-label="Open navigation" aria-expanded="false" data-menu-toggle>
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <div class="topbar-title">
+        <p class="eyebrow" th:text="${eyebrow}">Customer workspace</p>
+        <h1 th:text="${title}">Dashboard</h1>
+    </div>
+
+    <div class="topbar-actions">
+        <span class="account-chip" th:text="${email}">customer@example.com</span>
+        <form th:action="@{/logout}" method="post">
+            <button class="logout-button" type="submit">Logout</button>
+        </form>
+    </div>
+</header>
+</body>
+</html>

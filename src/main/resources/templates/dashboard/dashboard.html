@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Dashboard')}"></head>
+<body>
+<div class="dashboard-shell">
+    <div class="mobile-overlay" data-menu-overlay></div>
+    <aside th:replace="~{fragments/sidebar :: sidebar('dashboard')}"></aside>
+
+    <div class="app-frame">
+        <main class="dashboard-main">
+            <header th:replace="~{fragments/navbar :: navbar('Dashboard', 'Customer workspace')}"></header>
+
+            <section class="welcome-panel">
+                <div>
+                    <p class="eyebrow">Signed in as</p>
+                    <h2 th:text="${email}">customer@example.com</h2>
+                    <p>
+                        Review your payment gateway activity from one workspace. The core modules are wired and ready
+                        for deeper data integration.
+                    </p>
+                </div>
+                <span class="status-pill">Active session</span>
+            </section>
+
+            <section class="metric-grid" aria-label="Dashboard summary">
+                <a class="metric-card metric-link" th:href="@{/dashboard/payments}">
+                    <span>Total payments</span>
+                    <strong th:text="${paymentCount}">0</strong>
+                    <p>Open payment tracking</p>
+                </a>
+
+                <a class="metric-card metric-link" th:href="@{/dashboard/orders}">
+                    <span>Orders</span>
+                    <strong th:text="${orderCount}">0</strong>
+                    <p>View order workflow</p>
+                </a>
+
+                <a class="metric-card metric-link" th:href="@{/dashboard/invoice}">
+                    <span>Invoices</span>
+                    <strong th:text="${invoiceCount}">0</strong>
+                    <p>Manage billing records</p>
+                </a>
+            </section>
+
+            <section class="content-grid">
+                <article class="panel">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">Operations</p>
+                            <h2>Quick actions</h2>
+                        </div>
+                    </div>
+                    <div class="action-grid">
+                        <a th:href="@{/dashboard/products}">Browse products</a>
+                        <a th:href="@{/dashboard/cart}">View cart</a>
+                        <a th:href="@{/dashboard/checkout}">Checkout</a>
+                        <a th:href="@{/dashboard/invoice}">Generate invoice</a>
+                    </div>
+                </article>
+
+                <article class="panel">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">Today</p>
+                            <h2>Activity</h2>
+                        </div>
+                    </div>
+                    <ul class="activity-list">
+                        <li>
+                            <span class="activity-dot success"></span>
+                            <div>
+                                <strong>Dashboard ready</strong>
+                                <p>Frontend modules are connected to routes.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="activity-dot warning"></span>
+                            <div>
+                                <strong>Data pending</strong>
+                                <p>Service-backed lists can be added in the next step.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </article>
+            </section>
+        </main>
+
+        <footer th:replace="~{fragments/footer :: footer}"></footer>
+    </div>
+</div>
+
+<script th:src="@{/js/dashboard.js}"></script>
+</body>
+</html>

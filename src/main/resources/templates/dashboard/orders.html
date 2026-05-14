@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Orders')}"></head>
+<body>
+<div class="dashboard-shell">
+    <div class="mobile-overlay" data-menu-overlay></div>
+    <aside th:replace="~{fragments/sidebar :: sidebar('orders')}"></aside>
+
+    <div class="app-frame">
+        <main class="dashboard-main">
+            <header th:replace="~{fragments/navbar :: navbar('Orders', 'Customer orders')}"></header>
+
+            <section class="page-hero">
+                <div>
+                    <p class="eyebrow">Order module</p>
+                    <h2>Manage order status, payment state, and shipping details.</h2>
+                    <p>Orders are created from cart checkout and updated after Razorpay verification.</p>
+                </div>
+                <a class="primary-action" th:href="@{/dashboard/products}">New order</a>
+            </section>
+
+            <section class="kanban-grid">
+                <article class="status-card">
+                    <span>Created</span>
+                    <strong th:text="${createdCount}">0</strong>
+                    <p>Orders waiting for payment.</p>
+                </article>
+                <article class="status-card">
+                    <span>Confirmed</span>
+                    <strong th:text="${confirmedCount}">0</strong>
+                    <p>Paid orders ready for fulfilment.</p>
+                </article>
+                <article class="status-card">
+                    <span>Failed</span>
+                    <strong th:text="${failedCount}">0</strong>
+                    <p>Orders with failed payment.</p>
+                </article>
+            </section>
+
+            <section class="panel">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow">Order list</p>
+                        <h2>Latest orders</h2>
+                    </div>
+                </div>
+
+                <div class="empty-state" th:if="${orders.isEmpty()}">
+                    <strong>No orders yet</strong>
+                    <p>Create an order by checking out your cart.</p>
+                </div>
+
+                <div class="table-wrap" th:if="${!orders.isEmpty()}">
+                    <table class="data-table">
+                        <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Total</th>
+                            <th>Payment</th>
+                            <th>Order Status</th>
+                            <th>Shipping</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="order : ${orders}">
+                            <td th:text="${order.orderId}">ORD</td>
+                            <td th:text="${'INR ' + #numbers.formatDecimal(order.totalAmount, 1, 2)}">INR 0.00</td>
+                            <td><span class="table-status" th:classappend="${#strings.toLowerCase(order.paymentStatus)}" th:text="${order.paymentStatus}">PENDING</span></td>
+                            <td th:text="${order.orderStatus}">CREATED</td>
+                            <td th:text="${order.shippingAddress}">Address</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <footer th:replace="~{fragments/footer :: footer}"></footer>
+    </div>
+</div>
+<script th:src="@{/js/dashboard.js}"></script>
+</body>
+</html>

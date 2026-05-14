@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('History')}"></head>
+<body>
+<div class="dashboard-shell">
+    <div class="mobile-overlay" data-menu-overlay></div>
+    <aside th:replace="~{fragments/sidebar :: sidebar('history')}"></aside>
+
+    <div class="app-frame">
+        <main class="dashboard-main">
+            <header th:replace="~{fragments/navbar :: navbar('History', 'Audit trail')}"></header>
+
+            <section class="page-hero">
+                <div>
+                    <p class="eyebrow">History</p>
+                    <h2>Recent order, payment, and invoice events.</h2>
+                    <p>This timeline merges the main checkout records for the signed-in customer.</p>
+                </div>
+                <a class="primary-action" th:href="@{/dashboard/payments}">View payments</a>
+            </section>
+
+            <section class="panel">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow">Timeline</p>
+                        <h2>Recent events</h2>
+                    </div>
+                </div>
+
+                <div class="empty-state" th:if="${events.isEmpty()}">
+                    <strong>No events yet</strong>
+                    <p>Checkout activity will appear here after an order is created.</p>
+                </div>
+
+                <ul class="timeline-list" th:if="${!events.isEmpty()}">
+                    <li th:each="event : ${events}">
+                        <time th:text="${#temporals.format(event.date, 'dd MMM')}">Today</time>
+                        <div>
+                            <strong th:text="${event.title}">Payment event</strong>
+                            <p th:text="${event.description}">Payment details</p>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+        </main>
+
+        <footer th:replace="~{fragments/footer :: footer}"></footer>
+    </div>
+</div>
+<script th:src="@{/js/dashboard.js}"></script>
+</body>
+</html>

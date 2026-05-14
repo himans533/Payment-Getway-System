@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Payment Result')}"></head>
+<body>
+<div class="dashboard-shell">
+    <div class="mobile-overlay" data-menu-overlay></div>
+    <aside th:replace="~{fragments/sidebar :: sidebar('payments')}"></aside>
+
+    <div class="app-frame">
+        <main class="dashboard-main">
+            <header th:replace="~{fragments/navbar :: navbar('Payment Result', 'Checkout status')}"></header>
+
+            <section class="welcome-panel">
+                <div th:if="${status == 'success'}">
+                    <p class="eyebrow">Payment verified</p>
+                    <h2>Payment completed successfully.</h2>
+                    <p th:text="${'Order ' + orderId + ' is confirmed and an invoice record has been created.'}">
+                        Order confirmed.
+                    </p>
+                </div>
+                <div th:if="${status != 'success'}">
+                    <p class="eyebrow">Payment failed</p>
+                    <h2>Payment was not completed.</h2>
+                    <p th:text="${orderId != null ? 'Order ' + orderId + ' is marked failed or pending review.' : 'No order was confirmed.'}">
+                        Payment failed.
+                    </p>
+                </div>
+                <span class="status-pill" th:text="${status == 'success' ? 'Success' : 'Failed'}">Status</span>
+            </section>
+
+            <section class="action-grid">
+                <a th:href="@{/dashboard/orders}">View orders</a>
+                <a th:href="@{/dashboard/payments}">View payments</a>
+                <a th:href="@{/dashboard/invoice}">View invoices</a>
+                <a th:href="@{/dashboard/products}">Continue shopping</a>
+            </section>
+        </main>
+
+        <footer th:replace="~{fragments/footer :: footer}"></footer>
+    </div>
+</div>
+<script th:src="@{/js/dashboard.js}"></script>
+</body>
+</html>
